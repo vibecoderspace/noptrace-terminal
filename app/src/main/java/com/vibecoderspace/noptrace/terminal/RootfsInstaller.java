@@ -47,7 +47,9 @@ public final class RootfsInstaller {
 
     public static boolean isInstalled(Context context) {
         File rootfs = rootfsDir(context);
-        return new File(rootfs, MARKER).isFile() && new File(rootfs, "bin/sh").exists();
+        // bin/sh is an absolute symlink to /bin/busybox, which resolves
+        // outside the rootfs on the host; test the real file instead.
+        return new File(rootfs, MARKER).isFile() && new File(rootfs, "bin/busybox").isFile();
     }
 
     public static void install(Context context, Progress progress) throws Exception {
@@ -74,6 +76,9 @@ public final class RootfsInstaller {
         try {
             progress.onStage("Extracting root filesystem…");
             TarExtractor.extract(archive, staging);
+            if (!new File(staging, "bin/busybox").isFile()) {
+                throw new IOException("Extracted rootfs is missing /bin/busybox");
+            }
             if (!new File(staging, MARKER).createNewFile() && !new File(staging, MARKER).isFile()) {
                 throw new IOException("Cannot write install marker");
             }
@@ -147,10 +152,20 @@ public final class RootfsInstaller {
     }
 
     private static void deleteRecursively(File file) {
-        if (!file.exists()) return;
-        File[] children = file.listFiles();
-        if (children != null) {
-            for (File child : children) deleteRecursively(child);
+        // lstat, not exists(): the rootfs contains absolute symlinks (bin/sh ->
+        // /bin/busybox) that dangle on the host, and File.exists() follows
+        // links, so it would both miss them and be able to leave the tree.
+        android.system.StructStat stat;
+        try {
+            stat = android.system.Os.lstat(file.getAbsolutePath());
+        } catch (Exception e) {
+            return;
+        }
+        if (android.system.OsConstants.S_ISDIR(stat.st_mode)) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) deleteRecursively(child);
+            }
         }
         //noinspection ResultOfMethodCallIgnored
         file.delete();

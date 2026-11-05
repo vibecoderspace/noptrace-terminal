@@ -199,10 +199,19 @@ public final class TarExtractor {
     }
 
     private static void deleteRecursively(File file) {
-        if (!file.exists()) return;
-        File[] children = file.listFiles();
-        if (children != null) {
-            for (File child : children) deleteRecursively(child);
+        // Symlinks in the rootfs may be absolute and dangling on the host;
+        // lstat is the only way to see and unlink them without following.
+        android.system.StructStat stat;
+        try {
+            stat = android.system.Os.lstat(file.getAbsolutePath());
+        } catch (Exception e) {
+            return;
+        }
+        if (android.system.OsConstants.S_ISDIR(stat.st_mode)) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) deleteRecursively(child);
+            }
         }
         //noinspection ResultOfMethodCallIgnored
         file.delete();
