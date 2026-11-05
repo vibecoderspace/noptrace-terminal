@@ -79,7 +79,7 @@ public final class MainActivity extends Activity {
         terminalView.setTerminalViewClient(new ViewClient(this));
         applyTextSize();
 
-        retryButton.setOnClickListener(v -> installRootfs());
+        retryButton.setOnClickListener(v -> retry());
         bindKeys();
 
         if (RootfsInstaller.isInstalled(this)) {
@@ -116,6 +116,18 @@ public final class MainActivity extends Activity {
     }
 
     // ------------------------------------------------------------- lifecycle
+
+    /** Retry starts a session if the rootfs is intact, otherwise reinstalls. */
+    private void retry() {
+        installPanel.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+        if (RootfsInstaller.isInstalled(this)) {
+            startSession();
+        } else {
+            installRootfs();
+        }
+    }
 
     private void installRootfs() {
         installPanel.setVisibility(View.VISIBLE);
@@ -205,10 +217,6 @@ public final class MainActivity extends Activity {
         installPanel.setVisibility(View.VISIBLE);
         keyRow.setVisibility(View.GONE);
         retryButton.setVisibility(View.VISIBLE);
-        retryButton.setOnClickListener(v -> {
-            installPanel.setVisibility(View.GONE);
-            startSession();
-        });
     }
 
     void onColorsChanged() {
