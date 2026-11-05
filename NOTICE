@@ -1,0 +1,16 @@
+noptrace Terminal
+Copyright 2026 vibecoderspace
+
+This product includes software developed by:
+
+* noptrace (https://github.com/vibecoderspace/noptrace), licensed under the
+  Apache License, Version 2.0. noptrace is a fork of fake-chroot-ng by
+  Sylirre (https://github.com/sylirre/fake-chroot-ng).
+
+* Termux terminal-emulator and terminal-view
+  (https://github.com/termux/termux-app), licensed under the Apache License,
+  Version 2.0. Derived from Android Terminal Emulator by Jack Palevich.
+
+The Alpine Linux minirootfs is not bundled with this application. It is
+downloaded at runtime from https://alpinelinux.org and is distributed under
+the licenses of its respective packages.

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.termux.view.TerminalView
+            android:id="@+id/terminal_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <LinearLayout
+            android:id="@+id/install_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/install_panel_bg"
+            android:gravity="center"
+            android:minWidth="280dp"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/install_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/preparing"
+                android:textColor="#E6E6E6"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/install_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:indeterminate="true" />
+
+            <Button
+                android:id="@+id/install_retry"
+                style="@style/KeyButton"
+                android:layout_marginTop="18dp"
+                android:text="@string/retry"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/key_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#111111"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <Button
+                android:id="@+id/key_ctrl"
+                style="@style/KeyButton"
+                android:text="@string/key_ctrl" />
+
+            <Button
+                android:id="@+id/key_alt"
+                style="@style/KeyButton"
+                android:text="@string/key_alt" />
+
+            <Button
+                android:id="@+id/key_esc"
+                style="@style/KeyButton"
+                android:text="@string/key_esc" />
+
+            <Button
+                android:id="@+id/key_tab"
+                style="@style/KeyButton"
+                android:text="@string/key_tab" />
+
+            <Button
+                android:id="@+id/key_left"
+                style="@style/KeyButton"
+                android:text="@string/key_left" />
+
+            <Button
+                android:id="@+id/key_up"
+                style="@style/KeyButton"
+                android:text="@string/key_up" />
+
+            <Button
+                android:id="@+id/key_down"
+                style="@style/KeyButton"
+                android:text="@string/key_down" />
+
+            <Button
+                android:id="@+id/key_right"
+                style="@style/KeyButton"
+                android:text="@string/key_right" />
+
+            <Button
+                android:id="@+id/key_slash"
+                style="@style/KeyButton"
+                android:text="@string/key_slash" />
+
+            <Button
+                android:id="@+id/key_dash"
+                style="@style/KeyButton"
+                android:text="@string/key_dash" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">noptrace Terminal</string>
+    <string name="preparing">Preparing…</string>
+    <string name="retry">Retry</string>
+
+    <string name="key_ctrl">Ctrl</string>
+    <string name="key_alt">Alt</string>
+    <string name="key_esc">Esc</string>
+    <string name="key_tab">Tab</string>
+    <string name="key_left">←</string>
+    <string name="key_up">↑</string>
+    <string name="key_down">↓</string>
+    <string name="key_right">→</string>
+    <string name="key_slash">/</string>
+    <string name="key_dash">-</string>
+</resources>

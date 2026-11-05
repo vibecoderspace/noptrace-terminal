@@ -1,0 +1,3 @@
+[submodule "native/noptrace"]
+	path = native/noptrace
+	url = https://github.com/vibecoderspace/noptrace
